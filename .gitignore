@@ -6,3 +6,5 @@
 .project
 .worksheet
 target/
+/.idea/
+/.gitattributes

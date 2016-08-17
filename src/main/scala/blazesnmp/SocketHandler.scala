@@ -63,8 +63,11 @@ class SocketHandler extends Actor with TargetState {
       log.debug("Receiving {}", data)
       //val start = System.currentTimeMillis
       val decoded = BerDecode.getTlv(data.iterator)
+      log.debug("decoded ()", decoded)
       decoded match {
         case SnmpV2Msg(community, PduType.GetResponse, requestId, errorStatus, errorIndex, varbinds) => {
+          log.debug("SNMPV2 ...", community)
+          log.debug("SNMPV2 ...", errorStatus)
           val c = complete(requestId)
           //decodes = (System.currentTimeMillis - start) :: decodes
           c.foreach(_ ! GetResponse(errorStatus, errorIndex, varbinds.collect{
